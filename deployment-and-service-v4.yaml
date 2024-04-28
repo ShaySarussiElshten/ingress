@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-v4-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-v4
+  template:
+    metadata:
+      labels:
+        app: app-v4
+    spec:
+      containers:
+      - name: app-v4-container
+        image: shay88/k8s-node-app:v4
+        ports:
+        - containerPort: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-v4-service
+spec:
+  type: ClusterIP
+  selector:
+    app: app-v4
+  ports:
+  - port: 3000
+    targetPort: 3000
